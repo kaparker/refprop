@@ -1,1 +1,9 @@
-# refprop
+# Refprop Analysis code
+
+Basic CO2 analysis using temperatures 1-10 and pressure measurements p1, p2 to calculate the saturation properties.
+Note, units of input data: pressure [bar], temperature [C].
+
+Use pyROOT to make 3 histograms:
+1.) abs(pressure - satpressure) vs. time
+2.) abs(temp - sattemp) vs. time
+3.) raw temp 1-10, sattemp 1,2 vs. time
