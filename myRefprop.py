@@ -32,8 +32,14 @@ press1=[]
 press2=[]
 satpress1=[]
 satpress2=[]
-satpress1a=[]
-satpress2a=[]
+satpress3=[]
+satpress4=[]
+satpress5=[]
+satpress6=[]
+satpress7=[]
+satpress8=[]
+satpress9=[]
+satpress10=[]
 satpress1avg=[]
 satpress2avg=[]
 sattemp1=[]
@@ -80,23 +86,30 @@ for i in range(len(temp1)):
     T_1,p,Dl,Dv = RP.SATP(abs(bar(press1[i])),kph=1)
     T_2,p,Dl,Dv = RP.SATP(abs(bar(press2[i])),kph=1)
     
+    T,p_3,Dl,Dv = RP.SATT(abs(C(temp3[i])),kph=1) #the C-->K conversion happens inside
+    T,p_4,Dl,Dv = RP.SATT(abs(C(temp4[i])),kph=1) #the C-->K conversion happens inside
+    T,p_5,Dl,Dv = RP.SATT(abs(C(temp5[i])),kph=1) #the C-->K conversion happens inside
+    T,p_6,Dl,Dv = RP.SATT(abs(C(temp6[i])),kph=1) #the C-->K conversion happens inside
+    T,p_7,Dl,Dv = RP.SATT(abs(C(temp7[i])),kph=1) #the C-->K conversion happens inside
+    T,p_8,Dl,Dv = RP.SATT(abs(C(temp8[i])),kph=1) #the C-->K conversion happens inside
+
      #print Pa(p_1)
      #print Pa(p_2)
 
-    satpress1.append(Pa(p_1)) #passing Pa to become bar
-    satpress2.append(Pa(p_2)) #passing Pa to become bar
-    satpress1a.append(Pa(p_1a)) #passing Pa to become bar
-    satpress2a.append(Pa(p_2a)) #passing Pa to become bar
+    satpress9.append(Pa(p_1)) #passing Pa to become bar
+    satpress1.append(Pa(p_2)) #passing Pa to become bar
+    satpress10.append(Pa(p_1a)) #passing Pa to become bar
+    satpress2.append(Pa(p_2a)) #passing Pa to become bar
     sattemp1.append(K(T_1)) # passing K to become C
     sattemp2.append(K(T_2)) # passing K to become C
     
-    diff1.append(abs(press1[i]-satpress1[i]))
-    diff2.append(abs(press2[i]-satpress2[i]))
-    diff1a.append(abs(press1[i]-satpress1a[i]))
-    diff2a.append(abs(press2[i]-satpress2a[i]))
+    diff1.append(abs(press1[i]-satpress9[i]))
+    diff2.append(abs(press2[i]-satpress1[i]))
+    diff1a.append(abs(press1[i]-satpress10[i]))
+    diff2a.append(abs(press2[i]-satpress2[i]))
     
-    satpress1avg.append((satpress1[i]+satpress1a[i])/2)
-    satpress2avg.append((satpress2[i]+satpress2a[i])/2)
+    satpress1avg.append((satpress9[i]+satpress10[i])/2)
+    satpress2avg.append((satpress1[i]+satpress2[i])/2)
     diff1avg.append(abs(press1[i]-satpress1avg[i]))
     diff2avg.append(abs(press2[i]-satpress2avg[i]))
 
@@ -109,6 +122,13 @@ for i in range(len(temp1)):
     temp2avg.append((temp1[i]+temp2[i])/2)
     diff3avg.append(abs(temp1avg[i]-sattemp1[i]))
     diff4avg.append(abs(temp2avg[i]-sattemp2[i]))
+
+    satpress3.append(Pa(p_3)) #passing Pa to become bar
+    satpress4.append(Pa(p_4)) #passing Pa to become bar
+    satpress5.append(Pa(p_5)) #passing Pa to become bar
+    satpress6.append(Pa(p_6)) #passing Pa to become bar
+    satpress7.append(Pa(p_7)) #passing Pa to become bar
+    satpress8.append(Pa(p_8)) #passing Pa to become bar
 
 time=[float(x) for x in range(0,len(diff1))]
 
@@ -330,12 +350,113 @@ legend3.AddEntry(grT7, "T7", "p")
 legend3.AddEntry(grT8, "T8", "p")
 legend3.AddEntry(grT9, "T9", "p")
 legend3.AddEntry(grT10, "T10", "p")
-legend3.AddEntry(grTP1, "SatP1", "p")
-legend3.AddEntry(grTP2, "SatP2", "p")
+legend3.AddEntry(grTP1, "SatT1", "p")
+legend3.AddEntry(grTP2, "SatT2", "p")
 legend3.SetBorderSize(0);
 legend3.SetFillColor(0);
 legend3.Draw()
-canv3.Print("satpress_temp_all.png")
+canv3.Print("sattemp_temp_all.png")
+
+pt1=numpy.array(satpress1)
+pt2=numpy.array(satpress2)
+pt3=numpy.array(satpress3)
+pt4=numpy.array(satpress4)
+pt5=numpy.array(satpress5)
+pt6=numpy.array(satpress6)
+pt7=numpy.array(satpress7)
+pt8=numpy.array(satpress8)
+pt9=numpy.array(satpress9)
+pt10=numpy.array(satpress10)
+p1=numpy.array(press1)
+p2=numpy.array(press2)
+
+mg4 = ROOT.TMultiGraph()
+canv4 = ROOT.TCanvas("canv4","",600,600)
+grPT1 = ROOT.TGraph(len(x), x,pt1 )
+grPT2 = ROOT.TGraph(len(x), x,pt2 )
+grPT3 = ROOT.TGraph(len(x), x,pt3 )
+grPT4 = ROOT.TGraph(len(x), x,pt4 )
+grPT5= ROOT.TGraph(len(x), x,pt5 )
+grPT6 = ROOT.TGraph(len(x), x,pt6 )
+grPT7 = ROOT.TGraph(len(x), x,pt7 )
+grPT8 = ROOT.TGraph(len(x), x,pt8 )
+grPT9 = ROOT.TGraph(len(x), x,pt9 )
+grPT10 = ROOT.TGraph(len(x), x,pt10 )
+grP1 = ROOT.TGraph(len(x), x,p1 )
+grP2 = ROOT.TGraph(len(x), x,p2 )
+
+grPT9.SetMarkerStyle(21);
+grPT9.SetMarkerColor(3);
+grPT9.SetMarkerSize(1);
+grPT1.SetMarkerStyle(22);
+grPT1.SetMarkerColor(4);
+grPT1.SetMarkerSize(1);
+grPT10.SetMarkerStyle(21);
+grPT10.SetMarkerColor(2);
+grPT10.SetMarkerSize(1);
+grPT2.SetMarkerStyle(22);
+grPT2.SetMarkerColor(5);
+grPT2.SetMarkerSize(1);
+grP1.SetMarkerStyle(21);
+grP1.SetMarkerColor(1);
+grP1.SetMarkerSize(1);
+grP2.SetMarkerStyle(22);
+grP2.SetMarkerColor(12);
+grP2.SetMarkerSize(1);
+grPT3.SetMarkerStyle(21);
+grPT3.SetMarkerColor(6);
+grPT3.SetMarkerSize(1);
+grPT4.SetMarkerStyle(22);
+grPT4.SetMarkerColor(7);
+grPT4.SetMarkerSize(1);
+grPT5.SetMarkerStyle(21);
+grPT5.SetMarkerColor(8);
+grPT5.SetMarkerSize(1);
+grPT6.SetMarkerStyle(22);
+grPT6.SetMarkerColor(9);
+grPT6.SetMarkerSize(1);
+grPT7.SetMarkerStyle(21);
+grPT7.SetMarkerColor(10);
+grPT7.SetMarkerSize(1);
+grPT8.SetMarkerStyle(22);
+grPT8.SetMarkerColor(11);
+grPT8.SetMarkerSize(1);
+
+mg4.Add(grPT1,"p")
+mg4.Add(grPT2,"p")
+mg4.Add(grPT3,"p")
+mg4.Add(grPT4,"p")
+mg4.Add(grPT5,"p")
+mg4.Add(grPT6,"p")
+mg4.Add(grPT7,"p")
+mg4.Add(grPT8,"p")
+mg4.Add(grPT9,"p")
+mg4.Add(grPT10,"p")
+mg4.Add(grP1,"p")
+mg4.Add(grP2,"p")
+mg4.Draw("ap")
+
+h4=mg4.GetHistogram()
+h4.GetYaxis().SetTitle("Pressure [bar]")
+h4.GetXaxis().SetTitle("Time [sec]")
+h4.Draw("samep noaxis")
+legend4=ROOT.TLegend(0.8,0.7,0.95,0.95)
+legend4.AddEntry(grPT1, "SatP1", "p")
+legend4.AddEntry(grPT2, "SatP2", "p")
+legend4.AddEntry(grPT3, "SatP3", "p")
+legend4.AddEntry(grPT4, "SatP4", "p")
+legend4.AddEntry(grPT5, "SatP5", "p")
+legend4.AddEntry(grPT6, "SatP6", "p")
+legend4.AddEntry(grPT7, "SatP7", "p")
+legend4.AddEntry(grPT8, "SatP8", "p")
+legend4.AddEntry(grPT9, "SatP9", "p")
+legend4.AddEntry(grPT10, "SatP10", "p")
+legend4.AddEntry(grP1, "P1", "p")
+legend4.AddEntry(grP2, "P2", "p")
+legend4.SetBorderSize(0);
+legend4.SetFillColor(0);
+legend4.Draw()
+canv4.Print("press_satpress_all.png")
 
 inF.close()
 raw_input()
