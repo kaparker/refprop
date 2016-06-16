@@ -13,7 +13,10 @@ RP.fpath = "/home/parker/.refprop/"
 RP.SETPATH(RP.fpath)
 RP.SETUP('CO2.FLD')
 
-filein="/home/parker/Refprop/raw_data/22-08-cooldown.txt"
+#filename="22-08-cooldown"
+#filename="22-8-14-160gs-0W"
+filename="tsp-32-mf150"
+filein="/home/parker/Refprop/raw_data/"+filename+".txt"
 # Temp in C, Press in bar
 #filein="22-08-cooldown.txt"
 inF=open(filein,'r')
@@ -199,7 +202,7 @@ legend.SetBorderSize(0);
 legend.SetFillColor(0);
 legend.Draw()
 
-canv.Print("press_sattemp_sensor.png")
+canv.Print(filename+"_press_sattemp_sensor.png")
 
 mg2 = ROOT.TMultiGraph()
 canv2 = ROOT.TCanvas("canv2","",600,600)
@@ -252,7 +255,7 @@ legend2.SetBorderSize(0);
 legend2.SetFillColor(0);
 legend2.Draw()
 
-canv2.Print("satpress_temp_sensor.png")
+canv2.Print(filename+"_satpress_temp_sensor.png")
 
 t1=numpy.array(temp1)
 t2=numpy.array(temp2)
@@ -337,6 +340,7 @@ mg3.Draw("ap")
 
 h3=mg3.GetHistogram()
 h3.GetYaxis().SetTitle("Temperature [C]")
+h3.GetYaxis().SetTitleOffset(1.4)
 h3.GetXaxis().SetTitle("Time [sec]")
 h3.Draw("samep noaxis")
 legend3=ROOT.TLegend(0.8,0.7,0.95,0.95)
@@ -355,7 +359,7 @@ legend3.AddEntry(grTP2, "SatT2", "p")
 legend3.SetBorderSize(0);
 legend3.SetFillColor(0);
 legend3.Draw()
-canv3.Print("sattemp_temp_all.png")
+canv3.Print(filename+"_sattemp_temp_all.png")
 
 pt1=numpy.array(satpress1)
 pt2=numpy.array(satpress2)
@@ -438,6 +442,7 @@ mg4.Draw("ap")
 
 h4=mg4.GetHistogram()
 h4.GetYaxis().SetTitle("Pressure [bar]")
+h4.GetYaxis().SetTitleOffset(1.4)
 h4.GetXaxis().SetTitle("Time [sec]")
 h4.Draw("samep noaxis")
 legend4=ROOT.TLegend(0.8,0.7,0.95,0.95)
@@ -456,7 +461,7 @@ legend4.AddEntry(grP2, "P2", "p")
 legend4.SetBorderSize(0);
 legend4.SetFillColor(0);
 legend4.Draw()
-canv4.Print("press_satpress_all.png")
+canv4.Print(filename+"_press_satpress_all.png")
 
 inF.close()
 raw_input()
