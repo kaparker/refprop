@@ -8,3 +8,5 @@ Use pyROOT to make 4 histograms:
 2.) abs(temp - sattemp) vs. time
 3.) raw temp 1-10, sattemp 1,2 vs. time
 4.) raw pressure 1,2, satpress 1-10 vs. time
+5.) raw pressure 1,2 satpress 1,2,9,10 vs. time
+6.) raw temp 1,2,9,10, sattemp 1,2 vs. time
