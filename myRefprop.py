@@ -14,8 +14,8 @@ RP.SETPATH(RP.fpath)
 RP.SETUP('CO2.FLD')
 
 #filename="22-08-cooldown"
-#filename="22-8-14-160gs-0W"
-filename="tsp-32-mf150"
+#filename="22-8-14-127gs-0W"
+filename="tsp16-mf108" #change to new filename
 filein="/home/parker/Refprop/raw_data/"+filename+".txt"
 # Temp in C, Press in bar
 #filein="22-08-cooldown.txt"
@@ -462,6 +462,82 @@ legend4.SetBorderSize(0);
 legend4.SetFillColor(0);
 legend4.Draw()
 canv4.Print(filename+"_press_satpress_all.png")
+
+p1avg=numpy.array(satpress1avg)
+p2avg=numpy.array(satpress2avg)
+
+mg5 = ROOT.TMultiGraph()
+canv5 = ROOT.TCanvas("canv5","",600,600)
+
+gr11 = ROOT.TGraph(len(x), x,p1avg)
+gr12 = ROOT.TGraph(len(x), x,p2avg)
+
+gr11.SetMarkerStyle(21);
+gr11.SetMarkerColor(6);
+gr11.SetMarkerSize(0.2);
+gr12.SetMarkerStyle(22);
+gr12.SetMarkerColor(7);
+gr12.SetMarkerSize(0.5);
+
+mg5.Add(grPT1,"p")
+mg5.Add(grPT2,"p")
+mg5.Add(grPT9,"p")
+mg5.Add(grPT10,"p")
+mg5.Add(grP1,"p")
+mg5.Add(grP2,"p")
+mg5.Add(gr11,"p")
+mg5.Add(gr12,"p")
+mg5.Draw("ap")
+
+h5=mg5.GetHistogram()
+h5.GetYaxis().SetTitle("Pressure [bar]")
+h5.GetXaxis().SetTitle("Time [sec]")
+h5.GetYaxis().SetTitleOffset(1.4)
+h5.Draw("samep noaxis")
+
+legend5=ROOT.TLegend(0.8,0.8,0.95,0.95)
+legend5.AddEntry(grPT1, "SatP(T1)", "p")
+legend5.AddEntry(grPT2, "SatP(T2)", "p")
+legend5.AddEntry(grPT9, "SatP(T9)", "p")
+legend5.AddEntry(grPT10, "SatP(T10)", "p")
+legend5.AddEntry(grP1, "P1", "p")
+legend5.AddEntry(grP2, "P2", "p")
+legend5.AddEntry(gr11, "avg SatP(T): T9,T10", "p")
+legend5.AddEntry(gr12, "avg SatP(T): T1,T2", "p")
+legend5.SetBorderSize(0);
+legend5.SetFillColor(0);
+legend5.Draw()
+
+canv5.Print(filename+"_press_satpress_raw.png")
+
+mg6 = ROOT.TMultiGraph()
+canv6 = ROOT.TCanvas("canv6","",600,600)
+mg6.Add(grT1,"p")
+mg6.Add(grT2,"p")
+mg6.Add(grT9,"p")
+mg6.Add(grT10,"p")
+mg6.Add(grTP1,"p")
+mg6.Add(grTP2,"p")
+mg6.Draw("ap")
+
+h6=mg6.GetHistogram()
+h6.GetYaxis().SetTitle("Temperature [C]")
+h6.GetXaxis().SetTitle("Time [sec]")
+h6.GetYaxis().SetTitleOffset(1.4)
+h6.Draw("samep noaxis")
+
+legend6=ROOT.TLegend(0.8,0.8,0.95,0.95)
+legend6.AddEntry(grT1, "T1", "p")
+legend6.AddEntry(grT2, "T2", "p")
+legend6.AddEntry(grT9, "T9", "p")
+legend6.AddEntry(grT10, "T10", "p")
+legend6.AddEntry(grTP1, "SatT(P1)", "p")
+legend6.AddEntry(grTP2, "SatT(P2)", "p")
+legend6.SetBorderSize(0);
+legend6.SetFillColor(0);
+legend6.Draw()
+
+canv6.Print(filename+"_temp_sattemp_raw.png")
 
 inF.close()
 raw_input()
